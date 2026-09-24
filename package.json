@@ -1,0 +1,46 @@
+{
+  "name": "tp-tp6",
+  "version": "1.0.0",
+  "description": "Réducteur d'URL Node.js/Express",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon server.mjs",
+    "prod": "cross-env NODE_ENV=production node server.mjs",
+    "format": "prettier --write \"**/*.mjs\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AxelahtMtg03/tp-tp6.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^11.0.0",
+    "dotenv": "^18.0.3",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "http-errors": "^2.0.0",
+    "loglevel": "^1.9.1",
+    "morgan": "^1.10.0",
+    "serve-favicon": "^2.5.1",
+    "swagger-ui-express": "^5.0.1",
+    "yaml": "^2.5.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.7",
+    "@eslint/js": "^10.0.1",
+    "cross-env": "^10.1.0",
+    "eslint": "^10.11.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-n": "^18.3.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^7.3.0",
+    "eslint-plugin-unicorn": "^76.0.0",
+    "globals": "^17.12.0",
+    "nodemon": "^3.1.14",
+    "prettier": "^3.9.9"
+  }
+}
