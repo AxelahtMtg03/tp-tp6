@@ -34,3 +34,37 @@ paths:
           description: Lien créé
         "400":
           description: URL invalide
+  /error:
+    get:
+      summary: Route de test qui renvoie une erreur 500
+      responses:
+        "500":
+          description: Internal Server Error
+  /status/{url}:
+    get:
+      summary: Informations sur un lien
+      parameters:
+        - in: path
+          name: url
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Lien non trouvé
+  /{url}:
+    get:
+      summary: Redirige vers l'URL d'origine
+      parameters:
+        - in: path
+          name: url
+          required: true
+          schema:
+            type: string
+      responses:
+        "302":
+          description: Redirection
+        "404":
+          description: Lien non trouvé

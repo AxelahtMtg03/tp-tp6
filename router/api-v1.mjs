@@ -6,6 +6,7 @@ import {
   createLink,
   getLinkByUrl,
   getLinkByShort,
+  incrementVisits,
 } from "../database/database.mjs";
 
 const router = express.Router();
@@ -14,7 +15,8 @@ const router = express.Router();
  * Génère un identifiant court aléatoire de LINK_LEN caractères.
  */
 function generateShortCode(length = LINK_LEN) {
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const alphabet =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let code = "";
   for (let i = 0; i < length; i++) {
     code += alphabet[Math.floor(Math.random() * alphabet.length)];
@@ -76,6 +78,35 @@ router.post("/", async (request, response, next) => {
  */
 router.get("/error", async () => {
   throw new Error("Test error 500");
+});
+
+/**
+ * GET /status/:url — renvoie les infos d'un lien.
+ */
+router.get("/status/:url", async (request, response, next) => {
+  try {
+    const link = getLinkByShort(request.params.url);
+    if (!link) return next(createError(404, "Link not found"));
+    return response.json(link);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+/**
+ * GET /:url — redirige vers l'URL d'origine et incrémente les visites.
+ * DOIT être en dernier car c'est la route la plus générique.
+ */
+router.get("/:url", async (request, response, next) => {
+  try {
+    const link = getLinkByShort(request.params.url);
+    if (!link) return next(createError(404, "Link not found"));
+
+    incrementVisits(link.short);
+    return response.redirect(link.url);
+  } catch (error) {
+    return next(error);
+  }
 });
 
 export default router;
