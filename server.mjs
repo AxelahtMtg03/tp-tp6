@@ -9,12 +9,14 @@ import { PORT, NODE_ENV, DB_FILE, DB_SCHEMA, logger } from "./config.mjs";
 import { initDatabase, closeDatabase } from "./database/database.mjs";
 import apiV1 from "./router/api-v1.mjs";
 import favicon from "serve-favicon";
-
+import apiV2 from "./router/api-v2.mjs";
 // 1. Initialise la BDD
 initDatabase(DB_FILE, DB_SCHEMA);
 
 // 2. Crée l'app Express
 const app = express();
+app.set("view engine", "ejs");
+app.set("views", "views");
 app.disable("x-powered-by");
 // 3. Middlewares généraux
 if (NODE_ENV === "development") app.use(morgan("dev"));
@@ -29,6 +31,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openApiDoc));
 
 // 5. Routes API v1
 app.use("/api-v1", apiV1);
+app.use("/api-v2", apiV2);
+app.use("/", apiV2);
 
 // 6. 404 par défaut
 app.use((request, response, next) => {
