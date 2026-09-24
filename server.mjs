@@ -23,6 +23,7 @@ if (NODE_ENV === "development") app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(versionMiddleware);
+app.use(express.static("static"));
 app.use(favicon("static/logo_univ_16.jpg"));
 
 // 4. Swagger UI (APRÈS app)
