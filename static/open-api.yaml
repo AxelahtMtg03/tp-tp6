@@ -59,7 +59,7 @@ paths:
           description: Lien non trouvé
   /{url}:
     get:
-      summary: Redirige vers l'URL d'origine
+      summary: Redirige vers l'URL d'origine (HTML) ou renvoie les infos (JSON)
       parameters:
         - in: path
           name: url
@@ -71,3 +71,28 @@ paths:
           description: Redirection
         "404":
           description: Lien non trouvé
+    delete:
+      summary: Supprime un lien
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: url
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Lien supprimé
+        "401":
+          description: En-tête X-API-Key manquant
+        "403":
+          description: Clé invalide
+        "404":
+          description: Lien non trouvé
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key

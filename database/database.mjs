@@ -38,12 +38,19 @@ export function countLinks() {
 /**
  * Insère un nouveau lien et renvoie ses informations.
  */
-export function createLink(url, short) {
+export function createLink(url, short, secret) {
   const info = getDatabase()
-    .prepare("INSERT INTO links (url, short) VALUES (?, ?)")
-    .run(url, short);
+    .prepare("INSERT INTO links (url, short, secret) VALUES (?, ?, ?)")
+    .run(url, short, secret);
 
   return getLinkById(info.lastInsertRowid);
+}
+
+/**
+ * Supprime un lien par son code court.
+ */
+export function deleteLink(short) {
+  return getDatabase().prepare("DELETE FROM links WHERE short = ?").run(short);
 }
 
 /**
